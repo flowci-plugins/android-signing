@@ -19,22 +19,5 @@ inputs:
 
 script: |
   cd $FLOWCI_GIT_REPO
-  
-  tools=${ANDROID_SDK_HOME}/build-tools/${ANDROID_BUILD_TOOLS}
-
-  sign() 
-  {
-    origin=$1
-    
-    ${tools}/zipalign -f -v 4 ${origin} ${origin}.tmp
-    
-    ${tools}/apksigner \
-      --out <apk-filename> \
-      --ks keystore.jks \
-      --ks-pass pass:<password> \
-      --ks-key-alias <alias> \
-      --key-pass pass:<password>
-      ${origin}.tmp
-  }
-  
-  find ./app/build -type f -name "${SIGN_FILE_PATTERN}" | while read file; do sign "$file"; done
+  plugindir=${FLOWCI_AGENT_PLUGIN_DIR}/android-signing
+  ${plugindir}/sign.sh
