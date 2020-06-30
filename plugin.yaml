@@ -37,4 +37,4 @@ script: |
       ${origin}.tmp
   }
   
-  find ./app/build -type f -name "${SIGN_FILE_PATTERN}" -exec echo "sign {}" \;
+  find ./app/build -type f -name "${SIGN_FILE_PATTERN}" | while read file; do sign "$file"; done
