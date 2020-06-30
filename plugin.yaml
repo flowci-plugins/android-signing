@@ -1,0 +1,40 @@
+name: android-signing
+version: 1.0.0
+icon: "golang-icon.svg"
+
+inputs:
+- name: ANDROID_BUILD_TOOLS
+  type: string
+  required: true
+
+- name: ANDROID_SDK_HOME
+  type: string
+  required: true
+
+- name: SIGN_FILE_PATTERN
+  type: string
+  value: '*-unsigned.apk'
+  required: false
+
+
+script: |
+  cd $FLOWCI_GIT_REPO
+  
+  tools=${ANDROID_SDK_HOME}/build-tools/${ANDROID_BUILD_TOOLS}
+
+  sign() 
+  {
+    origin=$1
+    
+    ${tools}/zipalign -f -v 4 ${origin} ${origin}.tmp
+    
+    ${tools}/apksigner \
+      --out <apk-filename> \
+      --ks keystore.jks \
+      --ks-pass pass:<password> \
+      --ks-key-alias <alias> \
+      --key-pass pass:<password>
+      ${origin}.tmp
+  }
+  
+  find ./app/build -type f -name "${SIGN_FILE_PATTERN}" -exec echo "sign {}" \;
