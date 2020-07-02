@@ -16,8 +16,11 @@ inputs:
   value: '*-unsigned.apk'
   required: false
 
+- name: SIGN_SECRET
+  type: secret
+  required: true
 
 script: |
   cd $FLOWCI_GIT_REPO
   plugindir=${FLOWCI_AGENT_PLUGIN_DIR}/android-signing
-  ${plugindir}/sign.sh
+  ${plugindir}/src/sign.sh
