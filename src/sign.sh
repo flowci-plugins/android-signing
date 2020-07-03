@@ -39,8 +39,15 @@ sign()
   echo "'${signed}' signed"
 }
 
+echo 'loading secert...'
 srcDir=$(dirname $BASH_SOURCE)
 secretInfo=$(python3 ${srcDir}/load.py)
+
+if [[ $? != 0 ]]; then
+  exit 1
+fi
+
+echo 'secert loaded'
 echo ${secretInfo} | { 
   read ksPath ksPw keyAlias keyPw; 
   find /Users/yang/work/SampleHelloworld -type f -name "${SIGN_FILE_PATTERN}" | while read file; do sign $file $ksPath $ksPw $keyAlias $keyPw; done
