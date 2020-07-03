@@ -50,5 +50,5 @@ fi
 echo 'secert loaded'
 echo ${secretInfo} | { 
   read ksPath ksPw keyAlias keyPw; 
-  find /Users/yang/work/SampleHelloworld -type f -name "${SIGN_FILE_PATTERN}" | while read file; do sign $file $ksPath $ksPw $keyAlias $keyPw; done
+  find . -type f -name "${SIGN_FILE_PATTERN}" | while read file; do sign $file $ksPath $ksPw $keyAlias $keyPw; done
 }
