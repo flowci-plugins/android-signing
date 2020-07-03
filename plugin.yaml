@@ -1,6 +1,6 @@
 name: android-signing
 version: 1.0.0
-icon: "golang-icon.svg"
+icon: "android.svg"
 
 inputs:
 - name: ANDROID_BUILD_TOOLS
